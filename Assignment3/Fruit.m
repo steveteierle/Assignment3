@@ -15,6 +15,7 @@
     _name = inName;
     _shape = inShape;
     _color = inColor;
+
     return self;
 }
 

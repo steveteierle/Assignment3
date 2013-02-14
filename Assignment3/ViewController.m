@@ -14,11 +14,12 @@
 
 @end
 
-@implementation ViewController
 
+@implementation ViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _btn1.hidden=TRUE;
     
     self.title = @"Bluth's Banana Stand";
     
@@ -40,6 +41,7 @@
     
     
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -64,15 +66,48 @@
 //Should remove all of the fruit in the cart.
 -(IBAction)removeAllFruitInCart:(id)sender
 {
-    
+    [_cart removeAllObjects];    
+    [_cartView reloadData];
 }
 
 //should add 50 bananas to the cart and display them!
 -(IBAction)fillCartWithBananas:(id)sender
 {
     
+    for(int i = 0; i < 50; i++){
+        NSString * fruitName = [NSString stringWithFormat:@"Banana %d", i];
+        
+        if((i % 10) == 0){
+            fruitName = [NSString stringWithFormat:@"Free Banana %d", i];
+        }
+        
+        Fruit * anonFruit = [[Fruit alloc] initWithWithName:fruitName andColor:@"Yellow" andShape:@"Curved"];
+        anonFruit.url = @"http://en.m.wikipedia.org/wiki/Banana";
+        [_cart addObject:anonFruit];
+    }
+[_cartView reloadData];
 }
 
+-(IBAction)hideButton
+{
+    _btn1.hidden=TRUE;
+    _btn2.hidden=FALSE;
+}
+-(IBAction)hideButton2
+{
+    _btn2.hidden=TRUE;
+    _btn1.hidden=FALSE;
+}
+-(IBAction)hideSelect
+{
+    _btn3.hidden=TRUE;
+    _btn4.hidden=FALSE;
+}
+-(IBAction)hideDeselect
+{
+    _btn4.hidden=TRUE;
+    _btn3.hidden=FALSE;
+}
 
 
 #pragma mark UITableView dataSource and delegate methods
@@ -131,7 +166,11 @@
     detailView.title = selectedFruit.name;
     detailView.url = selectedFruit.url;
     
+    
     [self.navigationController pushViewController:detailView animated:YES];
+   
 }
+
+
 
 @end
